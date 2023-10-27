@@ -2,7 +2,7 @@
 
 1. ```git clone https://github.com/DenWouk/rsschool-react.git```
 
-2. ```npm i```
+2. ```npm i``` or ```yarn install```
 
 ## Scripts:
 
