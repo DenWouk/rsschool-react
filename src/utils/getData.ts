@@ -8,7 +8,5 @@ export async function getData(query: string) {
   const response: Response = await fetch(url);
   const data: ResponseJSON = await response.json();
 
-  console.log(data);
-
   return data;
 }

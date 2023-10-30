@@ -8,7 +8,7 @@ export class MainPage extends Component {
     return (
       <>
         <ErrorBoundaryBtn />
-        <SearchBar />;
+        <SearchBar />
       </>
     );
   }
