@@ -28,7 +28,7 @@ export class SearchBar extends Component<PropsConstructor> {
   }
 
   componentDidMount(): void {
-    localStorage.setItem('value', this.state.value);
+    this.handleSearch();
   }
 
   componentDidUpdate(): void {
@@ -49,7 +49,9 @@ export class SearchBar extends Component<PropsConstructor> {
   }
 
   async handleSearch() {
-    const data = await getData(this.state.value.trim());
+    const data = this.state.value
+      ? await getData(this.state.value.trim())
+      : await getData('mad max');
 
     this.setState({
       results: data.results,
@@ -63,7 +65,7 @@ export class SearchBar extends Component<PropsConstructor> {
       <>
         <form className="search-bar">
           <input
-            className="search-bar__text"
+            className="search-bar-text"
             type="text"
             placeholder="Search..."
             autoFocus
@@ -72,22 +74,29 @@ export class SearchBar extends Component<PropsConstructor> {
             ref={this.inputRef}
           />
           <input
-            className="search-bar__cancel"
+            className="search-bar-cancel"
             readOnly
+            type="button"
             style={{ backgroundImage: 'url(/cancel.svg)' }}
             onClick={this.onInputClear}
           />
           <input
-            className="search-bar__submit"
+            className="search-bar-submit"
             readOnly
+            type="submit"
+            value=""
             style={{ backgroundImage: 'url(/search.svg)' }}
             onClick={this.handleSearch}
           />
         </form>
         <div className="cards">
-          {data.map((el, i) => (
-            <Card {...el} key={i} />
-          ))}
+          {data.length ? (
+            data.map((el, i) => <Card {...el} key={i} />)
+          ) : (
+            <div className="no-data-message">
+              Sorry, no data. Try changing the request...
+            </div>
+          )}
         </div>
       </>
     );

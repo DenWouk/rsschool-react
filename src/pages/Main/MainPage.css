@@ -1,0 +1,12 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  padding: 25px 0;
+}
+
+.no-data-message {
+  padding-top: 25px;
+  font-size: 24px;
+}
