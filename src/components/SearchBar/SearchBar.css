@@ -3,6 +3,7 @@
   --color2: #545454;
   --color3: #ffffff;
   --color4: #e1e1e1;
+  --color5: #eeeeee;
 
   --border1: solid 1px var(--color2);
   --border2: solid 1px var(--color3);
@@ -12,6 +13,7 @@
   justify-content: end;
   align-items: center;
   width: 90%;
+  margin-top: 20px;
   border: var(--border1);
   border-radius: 3px;
 }
