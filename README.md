@@ -13,3 +13,5 @@
 3. ```npm run lint``` - run eslint to check errors
 
 4. ```npm run lint:fix``` - run eslint to fix errors
+
+5. ```npm run format:fix``` - run prettier to format code
