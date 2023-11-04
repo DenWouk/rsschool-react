@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { SearchFilmsResults } from '../../types/types';
+import { Article } from '../../types/types';
 import './Card.css';
 
-export class Card extends Component<SearchFilmsResults> {
+export class Card extends Component<Article> {
   render() {
     const props = this.props;
 
@@ -10,17 +10,21 @@ export class Card extends Component<SearchFilmsResults> {
       <div className="card">
         <object
           className="card-img"
-          data={`https://image.tmdb.org/t/p/w200/${props.poster_path}`}
+          data={props.urlToImage}
           data-testid="poster-path"
         >
-          No Poster
+          No image
         </object>
-        <p className="card-title" data-testid="card-title">
-          {props.title}
-        </p>
-        <p className="card-raiting" data-testid="card-raiting">
-          Raiting: {props.vote_average}
-        </p>
+
+        <div className="card-text">
+          <p className="card-title" data-testid="card-title">
+            {props.title}
+          </p>
+
+          <p className="card-description" data-testid="card-description">
+            {props.description}
+          </p>
+        </div>
       </div>
     );
   }

@@ -4,40 +4,39 @@
 
 .card {
   display: flex;
-  flex-direction: column;
-  width: 220px;
-  height: 450px;
+  width: 90%;
+  height: 200px;
   padding: 5px;
-  border: var(--border1);
   border-radius: 3px;
   background: var(--color4);
 }
 
 .card-img {
-  width: 100%;
-  min-height: 330px;
-  border-bottom: var(--border2);
-  border-top-left-radius: 7px;
-  border-top-right-radius: 7px;
-  text-align: center;
-  line-height: 2;
+  width: 300px;
+  object-fit: contain;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 10px;
 }
 
 .card-title {
   margin: 0;
   padding: 0 10px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bolder;
   color: var(--color2);
-  line-height: 1.6;
   overflow: hidden;
 }
 
-.card-raiting {
-  margin: auto 0 0 0;
+.card-description {
   padding-left: 10px;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   color: var(--color2);
   border-top: var(--border2);
+  overflow: hidden;
 }

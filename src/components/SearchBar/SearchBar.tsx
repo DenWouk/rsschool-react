@@ -1,6 +1,6 @@
 import { Component, ChangeEvent, RefObject, createRef } from 'react';
-import { PropsConstructor, SearchFilmsResults } from '../../types/types';
-import { getData } from '../../utils/getData';
+import { PropsConstructor, Article } from '../../types/types';
+import { getData } from '../../api/getData';
 import { Card } from '../Card/Card';
 import './SearchBar.css';
 
@@ -51,15 +51,15 @@ export class SearchBar extends Component<PropsConstructor> {
   async handleSearch() {
     const data = this.state.value
       ? await getData(this.state.value.trim())
-      : await getData('mad max');
+      : await getData('NASA');
 
     this.setState({
-      results: data.results,
+      results: data.articles,
     });
   }
 
   render(): JSX.Element {
-    const data: SearchFilmsResults[] = this.state.results;
+    const data: Article[] = this.state.results;
 
     return (
       <>
@@ -91,7 +91,7 @@ export class SearchBar extends Component<PropsConstructor> {
         </form>
         <div className="cards">
           {data.length ? (
-            data.map((el, i) => <Card {...el} key={i} />)
+            data.map((el) => <Card {...el} key={el.title} />)
           ) : (
             <div className="no-data-message">
               Sorry, no data. Try changing the request...
