@@ -1,104 +1,80 @@
-import { Component, ChangeEvent, RefObject, createRef } from 'react';
-import { PropsConstructor, Article } from '../../types/types';
+import { ChangeEvent, useState, useRef, useEffect } from 'react';
+import { Article } from '../../types/types';
 import { getData } from '../../api/getData';
 import { Card } from '../Card/Card';
 import './SearchBar.css';
 
-export class SearchBar extends Component<PropsConstructor> {
-  inputRef: RefObject<HTMLInputElement>;
+export function SearchBar(): JSX.Element {
+  const [value, setValue] = useState(
+    localStorage.getItem('localStorageValue') ?? ''
+  );
+  const [articles, setArticles] = useState<Article[]>([]);
 
-  state: {
-    value: string;
-    results: [];
-  };
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  constructor(props: PropsConstructor) {
-    super(props);
+  useEffect((): void => {
+    handleSearch();
+  }, []);
 
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onInputClear = this.onInputClear.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-
-    this.inputRef = createRef();
-
-    this.state = {
-      value: localStorage.getItem('value') ?? '',
-      results: [],
-    };
+  function onInputChange(event: ChangeEvent<HTMLInputElement>): void {
+    setValue(event.target.value);
+    localStorage.setItem('localStorageValue', event.target.value);
   }
 
-  componentDidMount(): void {
-    this.handleSearch();
+  function onInputClear(): void {
+    setValue('');
+    localStorage.setItem('localStorageValue', '');
+
+    onInputFocus();
   }
 
-  componentDidUpdate(): void {
-    localStorage.setItem('value', this.state.value);
+  function onInputFocus(): void {
+    inputRef.current?.focus();
   }
 
-  onInputChange(event: ChangeEvent<HTMLInputElement>): void {
-    this.setState({ value: event.target.value });
+  async function handleSearch() {
+    const data = value ? await getData(value.trim()) : await getData('NASA');
+
+    setArticles([...data.articles]);
   }
 
-  onInputClear(): void {
-    this.setState({ value: '' });
-    this.onInputFocus();
-  }
-
-  onInputFocus(): void {
-    this.inputRef.current?.focus();
-  }
-
-  async handleSearch() {
-    const data = this.state.value
-      ? await getData(this.state.value.trim())
-      : await getData('NASA');
-
-    this.setState({
-      results: data.articles,
-    });
-  }
-
-  render(): JSX.Element {
-    const data: Article[] = this.state.results;
-
-    return (
-      <>
-        <form className="search-bar">
-          <input
-            className="search-bar-text"
-            type="text"
-            placeholder="Search..."
-            autoFocus
-            onChange={this.onInputChange}
-            value={this.state.value}
-            ref={this.inputRef}
-          />
-          <input
-            className="search-bar-cancel"
-            readOnly
-            type="button"
-            style={{ backgroundImage: 'url(/cancel.svg)' }}
-            onClick={this.onInputClear}
-          />
-          <input
-            className="search-bar-submit"
-            readOnly
-            type="submit"
-            value=""
-            style={{ backgroundImage: 'url(/search.svg)' }}
-            onClick={this.handleSearch}
-          />
-        </form>
-        <div className="cards">
-          {data.length ? (
-            data.map((el) => <Card {...el} key={el.title} />)
-          ) : (
-            <div className="no-data-message">
-              Sorry, no data. Try changing the request...
-            </div>
-          )}
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <form className="search-bar">
+        <input
+          className="search-bar-text"
+          type="text"
+          placeholder="Search..."
+          autoFocus
+          onChange={onInputChange}
+          value={value}
+          ref={inputRef}
+        />
+        <input
+          className="search-bar-cancel"
+          readOnly
+          type="button"
+          style={{ backgroundImage: 'url(/cancel.svg)' }}
+          onClick={onInputClear}
+        />
+        <input
+          className="search-bar-submit"
+          readOnly
+          type="submit"
+          value=""
+          style={{ backgroundImage: 'url(/search.svg)' }}
+          onClick={handleSearch}
+        />
+      </form>
+      <div className="cards">
+        {articles.length ? (
+          articles.map((el) => <Card {...el} key={el.title} />)
+        ) : (
+          <div className="no-data-message">
+            Sorry, no data. Try changing the request...
+          </div>
+        )}
+      </div>
+    </>
+  );
 }
