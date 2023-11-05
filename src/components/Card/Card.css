@@ -1,0 +1,44 @@
+.card-link {
+  text-decoration: none;
+}
+
+.card {
+  display: flex;
+  width: 90%;
+  height: 200px;
+  padding: 5px;
+  border-radius: 3px;
+  background: var(--color4);
+}
+
+.card-img {
+  width: 300px;
+  min-width: 300px;
+  font-size: 18px;
+  object-fit: contain;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.card-title {
+  margin: 0;
+  padding: 0 10px;
+  font-size: 20px;
+  font-weight: bolder;
+  color: var(--color2);
+  overflow: hidden;
+}
+
+.card-description {
+  padding-left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color2);
+  border-top: var(--border2);
+  overflow: hidden;
+}
