@@ -13,6 +13,8 @@
 
 .card-img {
   width: 300px;
+  min-width: 300px;
+  font-size: 18px;
   object-fit: contain;
 }
 

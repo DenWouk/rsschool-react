@@ -1,9 +1,13 @@
 import { Article } from '../../types/types';
 import './Card.css';
 
-export function Card(props: Article) {
+interface CardProps {
+  openCard(): void;
+}
+
+export function Card(props: Article & CardProps): JSX.Element {
   return (
-    <div className="card">
+    <div className="card" onClick={props.openCard}>
       <object
         className="card-img"
         data={props.urlToImage}
@@ -13,13 +17,9 @@ export function Card(props: Article) {
       </object>
 
       <div className="card-text">
-        <p className="card-title" data-testid="card-title">
-          {props.title}
-        </p>
+        <p className="card-title">{props.title}</p>
 
-        <p className="card-description" data-testid="card-description">
-          {props.description}
-        </p>
+        <p className="card-description">{props.description}</p>
       </div>
     </div>
   );

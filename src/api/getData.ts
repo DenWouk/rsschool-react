@@ -1,16 +1,16 @@
-import { ResponseJSON } from '../types/types';
+import { ResponseData } from '../types/types';
 
 const API_URL = 'https://newsapi.org/v2/everything';
-const API_KEY = '0f3f7d182c0840a4997f1f88ea60397c';
+const API_KEY = '1f4be37456c047d0bfe7091ceaa25eab';
 
-export async function getData(query: string) {
+export async function getData(query: string, page: number, pageSize: number) {
   const response: Response = await fetch(
-    `${API_URL}?q=${query}&sortBy=popularity&pageSize=10&page=1&apiKey=${API_KEY}`
+    `${API_URL}?q=${query}&sortBy=relevancy&pageSize=${pageSize}&page=${page}&apiKey=${API_KEY}`
   );
 
-  const data: ResponseJSON = await response.json();
+  const data: ResponseData = await response.json();
 
-  console.log(data.articles);
+  console.log(data);
 
   return data;
 }

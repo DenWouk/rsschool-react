@@ -1,13 +1,9 @@
-export interface PropsConstructor {
-  [key: string | number | symbol]: never;
-}
-
 export interface Article {
-  author?: string;
-  content?: string;
-  description?: string;
-  publishetAt?: string;
-  source?: {
+  author: string;
+  content: string;
+  description: string;
+  publishetAt: string;
+  source: {
     id: null;
     name: string;
   };
@@ -16,7 +12,7 @@ export interface Article {
   urlToImage: string;
 }
 
-export interface ResponseJSON {
+export interface ResponseData {
   status: boolean;
   totalResults: number;
   articles: Article[];
