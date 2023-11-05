@@ -1,4 +1,5 @@
 import { ChangeEvent, useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Article } from '../../types/types';
 import { getData } from '../../api/getData';
 import { Card } from '../../components/Card/Card';
@@ -7,33 +8,39 @@ import './MainPage.css';
 
 export function MainPage(): JSX.Element {
   const [searchValue, setSearchValue] = useState(
-    localStorage.getItem('localStorageValue') ?? ''
+    localStorage.getItem('localStorageSearchValue') || ''
   );
+
   const [page, setPage] = useState(
     Number(localStorage.getItem('localStoragePage')) || 1
   );
+
   const [pageSize, setPageSize] = useState(
-    Number(localStorage.getItem('localStorageCardsQty')) || 10
+    Number(localStorage.getItem('localStorageCardsCardsPerPage')) || 10
   );
+
   const [articles, setArticles] = useState<Article[]>([]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect((): void => {
     handleSearch();
-  }, [page, pageSize]);
+  }, [page, pageSize, handleSearch]);
 
-  const cardsQty = [10, 20, 50];
-  const pages: number[] = [...Array(100 / pageSize).keys()];
+  const limitResults = 100;
+  const cardsPerPage = [10, 20, 50];
+  const pages = [...Array(limitResults / pageSize).keys()];
 
   function onInputChange(event: ChangeEvent<HTMLInputElement>): void {
     setSearchValue(event.target.value);
-    localStorage.setItem('localStorageValue', event.target.value);
+    localStorage.setItem('localStorageSearchValue', event.target.value);
   }
 
   function onInputClear(): void {
     setSearchValue('');
-    localStorage.setItem('localStorageValue', '');
+    localStorage.setItem('localStorageSearchValue', '');
 
     onInputFocus();
   }
@@ -43,8 +50,9 @@ export function MainPage(): JSX.Element {
   }
 
   function handleCardsQtyBtns(qty: number): void {
+    setPage(1);
     setPageSize(qty);
-    localStorage.setItem('localStorageCardsQty', String(qty));
+    localStorage.setItem('localStorageCardsCardsPerPage', String(qty));
 
     handleSearch();
   }
@@ -60,6 +68,9 @@ export function MainPage(): JSX.Element {
     const data = searchValue
       ? await getData(searchValue.trim(), page, pageSize)
       : await getData('NASA', page, pageSize);
+
+    setSearchParams({ search: searchValue, page: String(page) });
+    localStorage.setItem('localStorageSearchParams', String(searchParams));
 
     setArticles([...data.articles]);
   }
@@ -94,9 +105,10 @@ export function MainPage(): JSX.Element {
       </form>
 
       <div className="cards-qty-btns">
-        {cardsQty.map((el) => (
+        <span className="cards-qty-title">Quantity per page:</span>
+        {cardsPerPage.map((el) => (
           <button
-            className="cards-qty-btn"
+            className="btn cards-qty-btn"
             key={el}
             onClick={(): void => handleCardsQtyBtns(el)}
           >
@@ -108,7 +120,7 @@ export function MainPage(): JSX.Element {
       <Pagination
         pageNumbersBtns={pages.map((el) => (
           <button
-            className="pagination-btn"
+            className="btn pagination-btn"
             key={el + 1}
             onClick={(): void => handlePagination(el + 1)}
           >
@@ -132,6 +144,18 @@ export function MainPage(): JSX.Element {
           </div>
         )}
       </div>
+
+      <Pagination
+        pageNumbersBtns={pages.map((el) => (
+          <button
+            className="btn pagination-btn"
+            key={el + 1}
+            onClick={(): void => handlePagination(el + 1)}
+          >
+            {el + 1}
+          </button>
+        ))}
+      />
     </>
   );
 }
