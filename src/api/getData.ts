@@ -1,7 +1,7 @@
 import { ResponseData } from '../types/types';
 
 const API_URL = 'https://newsapi.org/v2/everything';
-const API_KEY = '1f4be37456c047d0bfe7091ceaa25eab';
+const API_KEY = '0f3f7d182c0840a4997f1f88ea60397c';
 
 export async function getData(query: string, page: number, pageSize: number) {
   const response: Response = await fetch(
@@ -9,8 +9,6 @@ export async function getData(query: string, page: number, pageSize: number) {
   );
 
   const data: ResponseData = await response.json();
-
-  console.log(data);
 
   return data;
 }

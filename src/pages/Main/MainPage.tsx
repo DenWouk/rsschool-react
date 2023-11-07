@@ -67,7 +67,7 @@ export function MainPage(): JSX.Element {
   async function handleSearch(): Promise<void> {
     const data = searchValue
       ? await getData(searchValue.trim(), page, pageSize)
-      : await getData('NASA', page, pageSize);
+      : await getData('news', page, pageSize);
 
     setSearchParams({ search: searchValue, page: String(page) });
     localStorage.setItem('localStorageSearchParams', String(searchParams));
@@ -77,57 +77,59 @@ export function MainPage(): JSX.Element {
 
   return (
     <>
-      <form className="search-bar">
-        <input
-          className="search-bar-text"
-          type="text"
-          placeholder="Search..."
-          autoFocus
-          onChange={onInputChange}
-          value={searchValue}
-          ref={inputRef}
-        />
-        <input
-          className="search-bar-cancel"
-          readOnly
-          type="button"
-          style={{ backgroundImage: 'url(/cancel.svg)' }}
-          onClick={onInputClear}
-        />
-        <input
-          className="search-bar-submit"
-          readOnly
-          type="submit"
-          value=""
-          style={{ backgroundImage: 'url(/search.svg)' }}
-          onClick={handleSearch}
-        />
-      </form>
+      <div className="search-controls">
+        <form className="search-bar">
+          <input
+            className="search-bar-text"
+            type="text"
+            placeholder="Search..."
+            autoFocus
+            onChange={onInputChange}
+            value={searchValue}
+            ref={inputRef}
+          />
+          <input
+            className="search-bar-cancel"
+            readOnly
+            type="button"
+            style={{ backgroundImage: 'url(/cancel.svg)' }}
+            onClick={onInputClear}
+          />
+          <input
+            className="search-bar-submit"
+            readOnly
+            type="submit"
+            value=""
+            style={{ backgroundImage: 'url(/search.svg)' }}
+            onClick={handleSearch}
+          />
+        </form>
 
-      <div className="cards-qty-btns">
-        <span className="cards-qty-title">Quantity per page:</span>
-        {cardsPerPage.map((el) => (
-          <button
-            className="btn cards-qty-btn"
-            key={el}
-            onClick={(): void => handleCardsQtyBtns(el)}
-          >
-            {el}
-          </button>
-        ))}
+        <div className="cards-qty-btns">
+          <span className="cards-qty-title">Quantity per page:</span>
+          {cardsPerPage.map((el) => (
+            <button
+              className="btn cards-qty-btn"
+              key={el}
+              onClick={(): void => handleCardsQtyBtns(el)}
+            >
+              {el}
+            </button>
+          ))}
+        </div>
+
+        <Pagination
+          pageNumbersBtns={pages.map((el) => (
+            <button
+              className="btn pagination-btn"
+              key={el + 1}
+              onClick={(): void => handlePagination(el + 1)}
+            >
+              {el + 1}
+            </button>
+          ))}
+        />
       </div>
-
-      <Pagination
-        pageNumbersBtns={pages.map((el) => (
-          <button
-            className="btn pagination-btn"
-            key={el + 1}
-            onClick={(): void => handlePagination(el + 1)}
-          >
-            {el + 1}
-          </button>
-        ))}
-      />
 
       <div className="cards">
         {articles.length ? (
@@ -144,18 +146,6 @@ export function MainPage(): JSX.Element {
           </div>
         )}
       </div>
-
-      <Pagination
-        pageNumbersBtns={pages.map((el) => (
-          <button
-            className="btn pagination-btn"
-            key={el + 1}
-            onClick={(): void => handlePagination(el + 1)}
-          >
-            {el + 1}
-          </button>
-        ))}
-      />
     </>
   );
 }
