@@ -27,7 +27,7 @@ export function MainPage(): JSX.Element {
 
   useEffect((): void => {
     handleSearch();
-  }, [page, pageSize, handleSearch]);
+  }, [page, pageSize]);
 
   const limitResults = 100;
   const cardsPerPage = [10, 20, 50];
