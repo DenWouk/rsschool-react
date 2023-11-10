@@ -1,9 +1,10 @@
-import { ChangeEvent, useState, useRef, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Article } from '../../types/types';
-import { getData } from '../../api/getData';
-import { Card } from '../../components/Card/Card';
+import { useState } from 'react';
+import { ArticleInterface } from '../../types/types';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { CardsList } from '../../components/CardsList/CardsList';
+import { AppProvider } from '../../store/appContext';
+import { PageSizeBtns } from '../../components/PageSizeBtns/PageSizeBtns';
+import { SearchBar } from '../../components/SearchBar/SearchBar';
 import './MainPage.css';
 
 export function MainPage(): JSX.Element {
@@ -19,133 +20,28 @@ export function MainPage(): JSX.Element {
     Number(localStorage.getItem('localStorageCardsCardsPerPage')) || 10
   );
 
-  const [articles, setArticles] = useState<Article[]>([]);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect((): void => {
-    handleSearch();
-  }, [page, pageSize]);
-
-  const limitResults = 100;
-  const cardsPerPage = [10, 20, 50];
-  const pages = [...Array(limitResults / pageSize).keys()];
-
-  function onInputChange(event: ChangeEvent<HTMLInputElement>): void {
-    setSearchValue(event.target.value);
-    localStorage.setItem('localStorageSearchValue', event.target.value);
-  }
-
-  function onInputClear(): void {
-    setSearchValue('');
-    localStorage.setItem('localStorageSearchValue', '');
-
-    onInputFocus();
-  }
-
-  function onInputFocus(): void {
-    inputRef.current?.focus();
-  }
-
-  function handleCardsQtyBtns(qty: number): void {
-    setPage(1);
-    setPageSize(qty);
-    localStorage.setItem('localStorageCardsCardsPerPage', String(qty));
-
-    handleSearch();
-  }
-
-  function handlePagination(btnNumber: number): void {
-    setPage(btnNumber);
-    localStorage.setItem('localStoragePage', String(btnNumber));
-
-    handleSearch();
-  }
-
-  async function handleSearch(): Promise<void> {
-    const data = searchValue
-      ? await getData(searchValue.trim(), page, pageSize)
-      : await getData('news', page, pageSize);
-
-    setSearchParams({ search: searchValue, page: String(page) });
-    localStorage.setItem('localStorageSearchParams', String(searchParams));
-
-    setArticles([...data.articles]);
-  }
+  const [articles, setArticles] = useState<ArticleInterface[]>([]);
 
   return (
-    <>
+    <AppProvider
+      value={{
+        searchValue,
+        setSearchValue,
+        page,
+        setPage,
+        pageSize,
+        setPageSize,
+        articles,
+        setArticles,
+      }}
+    >
       <div className="search-controls">
-        <form className="search-bar">
-          <input
-            className="search-bar-text"
-            type="text"
-            placeholder="Search..."
-            autoFocus
-            onChange={onInputChange}
-            value={searchValue}
-            ref={inputRef}
-          />
-          <input
-            className="search-bar-cancel"
-            readOnly
-            type="button"
-            style={{ backgroundImage: 'url(/cancel.svg)' }}
-            onClick={onInputClear}
-          />
-          <input
-            className="search-bar-submit"
-            readOnly
-            type="submit"
-            value=""
-            style={{ backgroundImage: 'url(/search.svg)' }}
-            onClick={handleSearch}
-          />
-        </form>
-
-        <div className="cards-qty-btns">
-          <span className="cards-qty-title">Quantity per page:</span>
-          {cardsPerPage.map((el) => (
-            <button
-              className="btn cards-qty-btn"
-              key={el}
-              onClick={(): void => handleCardsQtyBtns(el)}
-            >
-              {el}
-            </button>
-          ))}
-        </div>
-
-        <Pagination
-          pageNumbersBtns={pages.map((el) => (
-            <button
-              className="btn pagination-btn"
-              key={el + 1}
-              onClick={(): void => handlePagination(el + 1)}
-            >
-              {el + 1}
-            </button>
-          ))}
-        />
+        <SearchBar />
+        <PageSizeBtns />
+        <Pagination />
       </div>
 
-      <div className="cards">
-        {articles.length ? (
-          articles.map((el) => (
-            <Card
-              {...el}
-              key={el.title}
-              openCard={() => console.log(el.author)}
-            />
-          ))
-        ) : (
-          <div className="no-data-message">
-            Sorry, no data. Try changing the request...
-          </div>
-        )}
-      </div>
-    </>
+      <CardsList />
+    </AppProvider>
   );
 }

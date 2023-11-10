@@ -1,11 +1,11 @@
-import { Article } from '../../types/types';
+import { ArticleInterface } from '../../types/types';
 import './Card.css';
 
 interface CardProps {
   openCard(): void;
 }
 
-export function Card(props: Article & CardProps): JSX.Element {
+export function Card(props: ArticleInterface & CardProps): JSX.Element {
   return (
     <div className="card" onClick={props.openCard}>
       <object

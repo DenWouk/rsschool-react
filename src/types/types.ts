@@ -1,4 +1,4 @@
-export interface Article {
+export interface ArticleInterface {
   author: string;
   content: string;
   description: string;
@@ -12,8 +12,8 @@ export interface Article {
   urlToImage: string;
 }
 
-export interface ResponseData {
-  status: boolean;
-  totalResults: number;
-  articles: Article[];
+export interface ResponceDataInterface {
+  status?: boolean;
+  totalResults?: number;
+  articles: ArticleInterface[];
 }
