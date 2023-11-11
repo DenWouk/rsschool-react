@@ -9,15 +9,13 @@ import './MainPage.css';
 
 export function MainPage(): JSX.Element {
   const [searchValue, setSearchValue] = useState(
-    localStorage.getItem('localStorageSearchValue') || ''
+    localStorage.getItem('searchValue') || ''
   );
 
-  const [page, setPage] = useState(
-    Number(localStorage.getItem('localStoragePage')) || 1
-  );
+  const [page, setPage] = useState(Number(localStorage.getItem('page')) || 1);
 
   const [pageSize, setPageSize] = useState(
-    Number(localStorage.getItem('localStorageCardsCardsPerPage')) || 10
+    Number(localStorage.getItem('cardsPerPage')) || 10
   );
 
   const [articles, setArticles] = useState<ArticleInterface[]>([]);

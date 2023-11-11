@@ -11,8 +11,8 @@ export function PageSizeBtns() {
   const cardsPerPage = [10, 20, 50];
 
   function handleCardsQtyBtns(qty: number): void {
-    localStorage.setItem('localStoragePage', String(1));
-    localStorage.setItem('localStorageCardsCardsPerPage', String(qty));
+    localStorage.setItem('page', String(1));
+    localStorage.setItem('cardsPerPage', String(qty));
 
     context.setPage(1);
     context.setPageSize(qty);

@@ -21,7 +21,7 @@ export function SearchBar() {
 
   function onInputClear(): void {
     context.setSearchValue('');
-    localStorage.setItem('localStorageSearchValue', '');
+    localStorage.setItem('searchValue', '');
 
     onInputFocus();
   }
@@ -45,8 +45,8 @@ export function SearchBar() {
   }
 
   function handleSearch(): void {
-    localStorage.setItem('localStoragePage', String(1));
-    localStorage.setItem('localStorageSearchValue', context.searchValue);
+    localStorage.setItem('page', String(1));
+    localStorage.setItem('searchValue', context.searchValue);
 
     context.setPage(1);
     setSearchParams({ search: context.searchValue, page: String(1) });

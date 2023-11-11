@@ -31,7 +31,7 @@ export function Pagination(): JSX.Element {
   }
 
   async function handlePagination(btnNumber: number): Promise<void> {
-    localStorage.setItem('localStoragePage', String(btnNumber));
+    localStorage.setItem('page', String(btnNumber));
 
     context.setPage(btnNumber);
     setSearchParams({
