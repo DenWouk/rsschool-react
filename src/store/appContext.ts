@@ -17,7 +17,7 @@ export const AppContext = createContext<AppContextInterface>({
   setSearchValue: () => {},
   page: 1,
   setPage: () => {},
-  pageSize: 1,
+  pageSize: 10,
   setPageSize: () => {},
   articles: [],
   setArticles: () => {},

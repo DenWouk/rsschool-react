@@ -7,12 +7,8 @@ interface CardProps {
 
 export function Card(props: ArticleInterface & CardProps): JSX.Element {
   return (
-    <div className="card" onClick={props.openCard}>
-      <object
-        className="card-img"
-        data={props.urlToImage}
-        data-testid="poster-path"
-      >
+    <div className="card" onClick={props.openCard} data-testid="card">
+      <object className="card-img" data={props.urlToImage}>
         No image
       </object>
 

@@ -55,7 +55,7 @@ export function SearchBar() {
   }
 
   return (
-    <form className="search-bar">
+    <form className="search-bar" data-testid="search-bar">
       <input
         className="search-bar-text"
         type="text"
