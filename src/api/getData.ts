@@ -10,7 +10,5 @@ export async function getData(query: string, page: number, pageSize: number) {
 
   const data: ResponceDataInterface = await response.json();
 
-  console.log(data);
-
   return data.articles;
 }

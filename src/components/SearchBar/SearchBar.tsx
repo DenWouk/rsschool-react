@@ -1,4 +1,10 @@
-import { ChangeEvent, useContext, useEffect, useRef } from 'react';
+import {
+  ChangeEvent,
+  SyntheticEvent,
+  useContext,
+  useEffect,
+  useRef,
+} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getData } from '../../api/getData';
 import { AppContext } from '../../store/appContext';
@@ -44,7 +50,9 @@ export function SearchBar() {
         ]);
   }
 
-  function handleSearch(): void {
+  function handleSearch(event: SyntheticEvent): void {
+    event.preventDefault();
+
     localStorage.setItem('page', String(1));
     localStorage.setItem('searchValue', context.searchValue);
 
@@ -58,7 +66,7 @@ export function SearchBar() {
     <form className="search-bar" data-testid="search-bar">
       <input
         className="search-bar-text"
-        type="text"
+        type="search"
         placeholder="Search..."
         autoFocus
         onChange={onInputChange}
@@ -67,6 +75,7 @@ export function SearchBar() {
       />
       <input
         className="search-bar-cancel"
+        data-testid="clear-button"
         readOnly
         type="button"
         style={{ backgroundImage: 'url(/cancel.svg)' }}
