@@ -14,20 +14,6 @@ describe('SearchBar', () => {
     expect(screen.getByTestId('search-bar')).toBeInTheDocument();
   });
 
-  // test('handles input change', () => {
-  //   render(
-  //     <BrowserRouter>
-  //       <SearchBar />
-  //     </BrowserRouter>
-  //   );
-
-  //   const searchInput: HTMLInputElement =
-  //     screen.getByPlaceholderText(/search/i);
-
-  //   fireEvent.change(searchInput, { target: { value: 'test' } });
-  //   expect(searchInput.value).toBe('test');
-  // });
-
   test('clears input value', () => {
     render(
       <BrowserRouter>

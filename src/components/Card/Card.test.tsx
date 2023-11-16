@@ -19,12 +19,4 @@ describe('Card', () => {
       screen.getByText(articlesMockData[0].description)
     ).toBeInTheDocument();
   });
-
-  //   test('calls openCard function when card is clicked', () => {
-  //     render(<Card {...articlesMockData[0]} {...{ openCard() {} }} />);
-
-  //     screen.getByRole('article').click();
-
-  //     expect().toHaveBeenCalledTimes(1);
-  //   });
 });
