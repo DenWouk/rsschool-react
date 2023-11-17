@@ -1,46 +1,42 @@
-import { useContext, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { getData } from '../../api/getData';
-import { AppContext } from '../../store/appContext';
+// import { useSearchParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { handlePagination } from '../../store/appSlice';
 import './Pagination.css';
 
 export function Pagination(): JSX.Element {
-  const context = useContext(AppContext);
+  const state = useAppSelector((store) => store.app);
+  const dispatch = useAppDispatch();
 
-  const [, setSearchParams] = useSearchParams();
-
-  useEffect((): void => {
-    handlePagination(context.page);
-  }, [context.page]);
+  // const [, setSearchParams] = useSearchParams();
 
   const limitResults = 100;
-  const pages = [...Array(limitResults / context.pageSize).keys()];
+  const pages = [...Array(limitResults / state.pageSize).keys()];
 
-  async function displayArticles(): Promise<void> {
-    context.searchValue
-      ? context.setArticles([
-          ...(await getData(
-            context.searchValue,
-            context.page,
-            context.pageSize
-          )),
-        ])
-      : context.setArticles([
-          ...(await getData('news', context.page, context.pageSize)),
-        ]);
-  }
+  // async function displayArticles(): Promise<void> {
+  //   context.searchValue
+  //     ? context.setArticles([
+  //         ...(await getData(
+  //           context.searchValue,
+  //           context.page,
+  //           context.pageSize
+  //         )),
+  //       ])
+  //     : context.setArticles([
+  //         ...(await getData('news', context.page, context.pageSize)),
+  //       ]);
+  // }
 
-  async function handlePagination(btnNumber: number): Promise<void> {
-    localStorage.setItem('page', String(btnNumber));
+  // async function handlePagination(btnNumber: number): Promise<void> {
+  //   localStorage.setItem('page', String(btnNumber));
 
-    context.setPage(btnNumber);
-    setSearchParams({
-      search: context.searchValue,
-      page: String(context.page),
-    });
+  //   context.setPage(btnNumber);
+  //   setSearchParams({
+  //     search: context.searchValue,
+  //     page: String(context.page),
+  //   });
 
-    displayArticles();
-  }
+  //   displayArticles();
+  // }
 
   return (
     <div className="pagination-container">
@@ -49,7 +45,7 @@ export function Pagination(): JSX.Element {
           className="btn pagination-btn"
           key={el + 1}
           onClick={(): void => {
-            handlePagination(el + 1);
+            dispatch(handlePagination(el + 1));
           }}
         >
           {el + 1}

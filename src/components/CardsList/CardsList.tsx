@@ -1,28 +1,25 @@
-import { useContext } from 'react';
-import { AppContext, AppProvider } from '../../store/appContext';
 import { Card } from '../Card/Card';
 import './CardsList.css';
+import { useAppSelector } from '../../store/hooks';
 
 export function CardsList(): JSX.Element {
-  const context = useContext(AppContext);
+  const state = useAppSelector((store) => store.app);
 
   return (
-    <AppProvider value={context}>
-      <div className="cards">
-        {context?.articles.length ? (
-          context.articles.map((el, i) => (
-            <Card
-              {...el}
-              key={el.title + i}
-              openCard={() => console.log(el.author)}
-            />
-          ))
-        ) : (
-          <div className="no-data-message">
-            Sorry, no data. Try changing the request...
-          </div>
-        )}
-      </div>
-    </AppProvider>
+    <div className="cards">
+      {state.articles.length ? (
+        state.articles.map((el, i) => (
+          <Card
+            {...el}
+            key={el.title + i}
+            openCard={() => console.log(el.author)}
+          />
+        ))
+      ) : (
+        <div className="no-data-message">
+          Sorry, no data. Try changing the request...
+        </div>
+      )}
+    </div>
   );
 }
