@@ -5,34 +5,35 @@ const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    onInputChange(state, action) {
+    getSearchParams(state, action) {
       state.searchValue = action.payload;
+      state.pageSize = action.payload;
+      state.page = action.payload;
     },
-    onInputClear(state) {
-      state.searchValue = '';
-    },
-    handleSearch(state) {
+    handleSearch(state, action) {
+      state.searchValue = action.payload;
+      state.page = 1;
+
       localStorage.setItem('page', String(1));
       localStorage.setItem('searchValue', state.searchValue);
     },
     handleCardsPerPage(state, action: PayloadAction<number>) {
-      localStorage.setItem('page', String(1));
-      localStorage.setItem('cardsPerPage', String(action.payload));
-
       state.page = 1;
       state.pageSize = action.payload;
+
+      localStorage.setItem('page', String(1));
+      localStorage.setItem('cardsPerPage', String(action.payload));
     },
     handlePagination(state, action: PayloadAction<number>) {
-      localStorage.setItem('page', String(action.payload));
-
       state.page = action.payload;
+
+      localStorage.setItem('page', String(action.payload));
     },
   },
 });
 
 export const {
-  onInputChange,
-  onInputClear,
+  getSearchParams,
   handleSearch,
   handleCardsPerPage,
   handlePagination,

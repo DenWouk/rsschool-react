@@ -1,20 +1,28 @@
-import { ChangeEvent, SyntheticEvent, useRef } from 'react';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import {
-  handleSearch,
-  onInputChange,
-  onInputClear,
-} from '../../redux/appSlice';
+import { ChangeEvent, SyntheticEvent, useRef, useState } from 'react';
+import { useAppDispatch } from '../../redux/hooks';
+import { handleSearch } from '../../redux/appSlice';
 import './SearchBar.css';
 
 export function SearchBar() {
-  const state = useAppSelector((store) => store.app);
   const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const [searchValue, setSearchValue] = useState(
+    localStorage.getItem('searchValue') || ''
+  );
+
   function onInputFocus(): void {
     inputRef.current?.focus();
+  }
+
+  function onInputChange(event: ChangeEvent<HTMLInputElement>): void {
+    setSearchValue(event.target.value);
+  }
+
+  function onInputClear(): void {
+    setSearchValue('');
+    onInputFocus();
   }
 
   return (
@@ -24,11 +32,9 @@ export function SearchBar() {
         type="search"
         placeholder="Search..."
         autoFocus
-        value={state.searchValue}
+        value={searchValue}
         ref={inputRef}
-        onChange={(event: ChangeEvent<HTMLInputElement>) =>
-          dispatch(onInputChange(event.target.value))
-        }
+        onChange={onInputChange}
       />
       <input
         className="search-bar-cancel"
@@ -36,10 +42,7 @@ export function SearchBar() {
         readOnly
         type="button"
         style={{ backgroundImage: 'url(/cancel.svg)' }}
-        onClick={(): void => {
-          dispatch(onInputClear());
-          onInputFocus();
-        }}
+        onClick={onInputClear}
       />
       <input
         className="search-bar-submit"
@@ -49,7 +52,7 @@ export function SearchBar() {
         style={{ backgroundImage: 'url(/search.svg)' }}
         onClick={(event: SyntheticEvent) => {
           event.preventDefault();
-          dispatch(handleSearch());
+          dispatch(handleSearch(searchValue));
         }}
       />
     </form>

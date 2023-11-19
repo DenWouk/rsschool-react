@@ -8,7 +8,7 @@ export function CardsList(): JSX.Element {
   const { data, isLoading } = useGetDataQuery({ ...state });
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <h2 className="cards-loader">Loading...</h2>;
   }
 
   return (
