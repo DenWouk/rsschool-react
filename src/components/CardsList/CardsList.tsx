@@ -1,14 +1,20 @@
 import { Card } from '../Card/Card';
+import { useAppSelector } from '../../redux/hooks';
+import { useGetDataQuery } from '../../redux/dataApi';
 import './CardsList.css';
-import { useAppSelector } from '../../store/hooks';
 
 export function CardsList(): JSX.Element {
   const state = useAppSelector((store) => store.app);
+  const { data, isLoading } = useGetDataQuery({ ...state });
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div className="cards">
-      {state.articles.length ? (
-        state.articles.map((el, i) => (
+      {data?.articles.length ? (
+        data?.articles.map((el, i) => (
           <Card
             {...el}
             key={el.title + i}

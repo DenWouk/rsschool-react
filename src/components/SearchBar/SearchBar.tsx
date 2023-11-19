@@ -1,10 +1,10 @@
 import { ChangeEvent, SyntheticEvent, useRef } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   handleSearch,
   onInputChange,
   onInputClear,
-} from '../../store/appSlice';
+} from '../../redux/appSlice';
 import './SearchBar.css';
 
 export function SearchBar() {
@@ -16,20 +16,6 @@ export function SearchBar() {
   function onInputFocus(): void {
     inputRef.current?.focus();
   }
-
-  // async function displayArticles(): Promise<void> {
-  //   context.searchValue
-  //     ? context.setArticles([
-  //         ...(await getData(
-  //           context.searchValue,
-  //           context.page,
-  //           context.pageSize
-  //         )),
-  //       ])
-  //     : context.setArticles([
-  //         ...(await getData('news', context.page, context.pageSize)),
-  //       ]);
-  // }
 
   return (
     <form className="search-bar" data-testid="search-bar">

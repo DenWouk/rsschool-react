@@ -1,3 +1,9 @@
+export interface AppStateInterface {
+  searchValue: string;
+  page: number;
+  pageSize: number;
+}
+
 export interface ArticleInterface {
   author: string;
   content: string;

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { AppProvider } from '../../store/appContext';
+import { AppProvider } from '../../redux/appContext';
 import { CardsList } from './CardsList';
 import {
   articlesMockData,
