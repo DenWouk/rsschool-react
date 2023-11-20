@@ -23,13 +23,11 @@ export function MainPage(): JSX.Element {
   useEffect(() => {
     const query = searchParams.get('q' || initialState.searchValue);
     const page = Number(searchParams.get('page' || initialState.page));
-    const pageSize = Number(
-      searchParams.get('pageSize' || initialState.pageSize)
-    );
+    // const pageSize = Number(searchParams.get('pageSize' || initialState.pageSize));
 
     dispatch(setSearchValueParam(query));
     dispatch(setPageNumParam(page));
-    dispatch(setPageSizeParam(pageSize));
+    dispatch(setPageSizeParam(10));
   }, []);
 
   useEffect(() => {
