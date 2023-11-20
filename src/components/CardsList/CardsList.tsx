@@ -12,7 +12,7 @@ export function CardsList(): JSX.Element {
   }
 
   return (
-    <div className="cards">
+    <div className="cards" data-testid="cards">
       {data?.articles.length ? (
         data?.articles.map((el, i) => (
           <Card

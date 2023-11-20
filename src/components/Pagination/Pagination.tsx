@@ -11,10 +11,11 @@ export function Pagination(): JSX.Element {
   const pages = [...Array(limitResults / state.pageSize).keys()];
 
   return (
-    <div className="pagination-container">
+    <div className="pagination-container" data-testid="pagination">
       {pages.map((el) => (
         <button
           className="btn pagination-btn"
+          data-testid={`pagination-btn${el + 1}`}
           key={el + 1}
           onClick={(): void => {
             dispatch(handlePagination(el + 1));
