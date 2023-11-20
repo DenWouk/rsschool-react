@@ -5,10 +5,14 @@ const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    getSearchParams(state, action) {
+    setSearchValueParam(state, action) {
       state.searchValue = action.payload;
-      state.pageSize = action.payload;
+    },
+    setPageNumParam(state, action) {
       state.page = action.payload;
+    },
+    setPageSizeParam(state, action) {
+      state.pageSize = action.payload;
     },
     handleSearch(state, action) {
       state.searchValue = action.payload;
@@ -33,7 +37,9 @@ const appSlice = createSlice({
 });
 
 export const {
-  getSearchParams,
+  setSearchValueParam,
+  setPageNumParam,
+  setPageSizeParam,
   handleSearch,
   handleCardsPerPage,
   handlePagination,

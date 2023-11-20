@@ -1,3 +1,7 @@
+import { configureStore } from '@reduxjs/toolkit';
+import { dataApi } from '../redux/dataApi';
+import { appReducer } from '../redux/appSlice';
+
 export const articlesMockData = [
   {
     author: 'author1',
@@ -27,26 +31,31 @@ export const articlesMockData = [
   },
 ];
 
-export const contextMockData = {
-  searchValue: 'searchValue',
-  setSearchValue: () => {},
-  page: 1,
-  setPage: () => {},
-  pageSize: 10,
-  setPageSize: () => {},
-  articles: articlesMockData,
-  setArticles: () => {},
-};
-
 export const articlesEmptyMockData = [];
 
-export const contextEmptyMockData = {
+export const stateMockData = {
   searchValue: 'searchValue',
-  setSearchValue: () => {},
   page: 1,
-  setPage: () => {},
   pageSize: 10,
-  setPageSize: () => {},
+  articles: articlesMockData,
+};
+
+export const stateEmptyMockData = {
+  searchValue: 'searchValue',
+  page: 1,
+  pageSize: 10,
   articles: articlesEmptyMockData,
-  setArticles: () => {},
+};
+
+export const testStore = () => {
+  const store = configureStore({
+    reducer: {
+      app: appReducer,
+      [dataApi.reducerPath]: dataApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(dataApi.middleware),
+  });
+
+  return store;
 };

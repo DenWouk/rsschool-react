@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AppStateInterface, ResponceDataInterface } from '../types/types';
 
 const API_URL = 'https://newsapi.org/v2/everything/';
-const API_KEY = '77e236b0b7be4e61b7118218efa17ab6';
+const API_KEY = '1f4be37456c047d0bfe7091ceaa25eab';
 
 export const dataApi = createApi({
   reducerPath: 'dataApi',

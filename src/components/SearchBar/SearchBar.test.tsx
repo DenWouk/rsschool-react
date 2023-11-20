@@ -2,13 +2,17 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { SearchBar } from './SearchBar';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 
 describe('SearchBar', () => {
   test('renders without error', () => {
     render(
-      <BrowserRouter>
-        <SearchBar />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <SearchBar />
+        </BrowserRouter>
+      </Provider>
     );
 
     expect(screen.getByTestId('search-bar')).toBeInTheDocument();
@@ -16,9 +20,11 @@ describe('SearchBar', () => {
 
   test('clears input value', () => {
     render(
-      <BrowserRouter>
-        <SearchBar />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <SearchBar />
+        </BrowserRouter>
+      </Provider>
     );
 
     const searchInput: HTMLInputElement =
@@ -32,9 +38,11 @@ describe('SearchBar', () => {
 
   test('focuses on input', () => {
     render(
-      <BrowserRouter>
-        <SearchBar />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <SearchBar />
+        </BrowserRouter>
+      </Provider>
     );
 
     const searchInput = screen.getByPlaceholderText(/search/i);

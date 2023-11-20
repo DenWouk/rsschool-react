@@ -4,13 +4,33 @@ import { PageSizeBtns } from '../../components/PageSizeBtns/PageSizeBtns';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import './MainPage.css';
 import { useSearchParams } from 'react-router-dom';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useEffect } from 'react';
+import {
+  setPageNumParam,
+  setPageSizeParam,
+  setSearchValueParam,
+} from '../../redux/appSlice';
+import { initialState } from '../../redux/appState';
 
 export function MainPage(): JSX.Element {
   const state = useAppSelector((store) => store.app);
 
-  const [, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const query = searchParams.get('q' || initialState.searchValue);
+    const page = Number(searchParams.get('page' || initialState.page));
+    const pageSize = Number(
+      searchParams.get('pageSize' || initialState.pageSize)
+    );
+
+    dispatch(setSearchValueParam(query));
+    dispatch(setPageNumParam(page));
+    dispatch(setPageSizeParam(pageSize));
+  }, []);
 
   useEffect(() => {
     setSearchParams({

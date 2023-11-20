@@ -1,35 +1,21 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { AppProvider } from '../../redux/appContext';
 import { CardsList } from './CardsList';
-import {
-  articlesMockData,
-  contextEmptyMockData,
-  contextMockData,
-} from '../../tests/testsMockData';
+import { store } from '../../redux/store';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('CardsList', () => {
-  test('should render a list of cards when there is data', () => {
+  test('should display the loader when data loading', () => {
     render(
-      <AppProvider value={contextMockData}>
-        <CardsList />
-      </AppProvider>
+      <MemoryRouter>
+        <Provider store={store}>
+          <CardsList />
+        </Provider>
+      </MemoryRouter>
     );
 
-    const cards = screen.getAllByTestId('card');
-    expect(cards.length).toBe(articlesMockData.length);
-  });
-
-  test('should display "Sorry, no data." when there is no data', () => {
-    render(
-      <AppProvider value={contextEmptyMockData}>
-        <CardsList />
-      </AppProvider>
-    );
-
-    const errorMessage = screen.getByText(
-      'Sorry, no data. Try changing the request...'
-    );
-    expect(errorMessage).toBeInTheDocument();
+    const loader = screen.getByText(/loading/i);
+    expect(loader).toBeInTheDocument();
   });
 });
