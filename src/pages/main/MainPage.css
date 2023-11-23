@@ -1,0 +1,42 @@
+:root {
+  --color1: #708090;
+  --color2: #545454;
+  --color3: #ffffff;
+  --color4: #e1e1e1;
+  --color5: #eeeeee;
+
+  --border1: solid 1px var(--color2);
+  --border2: solid 1px var(--color3);
+  --border3: solid 2px var(--color4);
+}
+
+.active {
+  background-color: var(--color1);
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 50px;
+  padding: 5px;
+  border: var(--border3);
+  border-radius: 3px;
+}
+
+.btn:hover {
+  background-color: var(--color4);
+}
+
+.btn:active {
+  background-color: var(--color3);
+}
+
+.search-controls {
+  position: fixed;
+  top: 0;
+  width: 90.75%;
+  padding-bottom: 25px;
+  background-color: #fffffff5;
+}
