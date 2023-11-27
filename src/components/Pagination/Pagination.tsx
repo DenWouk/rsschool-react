@@ -1,9 +1,16 @@
-import './Pagination.css';
+import { useRouter } from "next/router";
+import "./Pagination.css";
 
 export function Pagination(): JSX.Element {
+  const router = useRouter();
+
 
   const limitResults = 100;
   const pages = [...Array(limitResults / 10).keys()];
+
+  function handlePagination(number: number) {
+    router.push({ query: { page: number } });
+  }
 
   return (
     <div className="pagination-container" data-testid="pagination">
@@ -13,7 +20,7 @@ export function Pagination(): JSX.Element {
           data-testid={`pagination-btn${el + 1}`}
           key={el + 1}
           onClick={(): void => {
-            // dispatch(handlePagination(el + 1));
+            handlePagination(el + 1);
           }}
         >
           {el + 1}

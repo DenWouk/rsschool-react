@@ -1,10 +1,17 @@
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
 import "./SearchBar.css";
+import { useRouter } from "next/router";
 
 export function SearchBar() {
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
-
   const [searchValue, setSearchValue] = useState("");
+
+  function handleSearch() {
+    if (inputRef.current) {
+      router.push({ query: { search: inputRef.current.value } });
+    }
+  }
 
   function onInputFocus(): void {
     inputRef.current?.focus();
@@ -46,7 +53,7 @@ export function SearchBar() {
         style={{ backgroundImage: "url(/search.svg)" }}
         onClick={(event: SyntheticEvent) => {
           event.preventDefault();
-          // handleSearch;
+          handleSearch();
         }}
       />
     </form>

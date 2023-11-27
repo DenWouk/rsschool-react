@@ -38,9 +38,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 export default function Home() {
   const router = useRouter();
 
-  const searchValue = router.query.searchValue || "news";
-  const pageSize = router.query.pageSize || "10";
+  const searchValue = router.query.search || "news";
+  const pageSize = router.query.limit || "10";
   const page = router.query.page || "1";
+
+  // router.push({ query: { search: searchValue, limit: pageSize, page: page } });
+
 
   const { data } = useGetDataQuery({
     searchValue: searchValue,

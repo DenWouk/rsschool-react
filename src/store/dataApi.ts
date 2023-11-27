@@ -3,7 +3,7 @@ import { HYDRATE } from "next-redux-wrapper";
 import { AppStateInterface, ResponceDataInterface } from "../types/types";
 
 const API_URL = "https://newsapi.org/v2/everything/";
-const API_KEY = "1f4be37456c047d0bfe7091ceaa25eab";
+const API_KEY = "0f3f7d182c0840a4997f1f88ea60397c";
 
 export const dataApi = createApi({
   reducerPath: "dataApi",

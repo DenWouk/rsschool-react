@@ -6,7 +6,11 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "eslint --fix --ext .ts,.tsx .",
+    "format:fix": "prettier . --write",
+    "prepare": "husky install",
+    "test": "jest --collect-coverage"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
