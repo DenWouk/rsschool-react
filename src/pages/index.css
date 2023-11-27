@@ -10,6 +10,24 @@
   --border3: solid 2px var(--color4);
 }
 
+body {
+  display: flex;
+  justify-content: center;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  min-width: 90vw;
+  min-height: 90vh;
+  padding: 20px;
+}
+
 .active {
   background-color: var(--color1);
 }
@@ -40,3 +58,6 @@
   padding-bottom: 25px;
   background-color: #fffffff5;
 }
+
+
+

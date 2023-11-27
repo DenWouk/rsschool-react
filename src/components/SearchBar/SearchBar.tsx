@@ -1,16 +1,10 @@
-import { ChangeEvent, SyntheticEvent, useRef, useState } from 'react';
-import { useAppDispatch } from '../../redux/hooks';
-import { handleSearch } from '../../redux/appSlice';
-import './SearchBar.css';
+import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
+import "./SearchBar.css";
 
 export function SearchBar() {
-  const dispatch = useAppDispatch();
-
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const [searchValue, setSearchValue] = useState(
-    localStorage.getItem('searchValue') || ''
-  );
+  const [searchValue, setSearchValue] = useState("");
 
   function onInputFocus(): void {
     inputRef.current?.focus();
@@ -21,7 +15,7 @@ export function SearchBar() {
   }
 
   function onInputClear(): void {
-    setSearchValue('');
+    setSearchValue("");
     onInputFocus();
   }
 
@@ -41,7 +35,7 @@ export function SearchBar() {
         data-testid="clear-button"
         readOnly
         type="button"
-        style={{ backgroundImage: 'url(/cancel.svg)' }}
+        style={{ backgroundImage: "url(/cancel.svg)" }}
         onClick={onInputClear}
       />
       <input
@@ -49,10 +43,10 @@ export function SearchBar() {
         readOnly
         type="submit"
         value=""
-        style={{ backgroundImage: 'url(/search.svg)' }}
+        style={{ backgroundImage: "url(/search.svg)" }}
         onClick={(event: SyntheticEvent) => {
           event.preventDefault();
-          dispatch(handleSearch(searchValue));
+          // handleSearch;
         }}
       />
     </form>

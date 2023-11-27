@@ -1,20 +1,20 @@
 export interface AppStateInterface {
-  searchValue: string;
-  page: number;
-  pageSize: number;
+  searchValue: string | string[];
+  page: string | string[];
+  pageSize: string | string[];
 }
 
 export interface ArticleInterface {
-  author: string;
-  content: string;
+  author?: string;
+  content?: string;
   description: string;
-  publishetAt: string;
-  source: {
+  publishetAt?: string;
+  source?: {
     id: null;
     name: string;
   };
   title: string;
-  url: string;
+  url?: string;
   urlToImage: string;
 }
 

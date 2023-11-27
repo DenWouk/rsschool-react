@@ -1,5 +1,5 @@
-import { ArticleInterface } from '../../types/types';
-import './Card.css';
+import { ArticleInterface } from "../../types/types";
+import "./Card.css";
 
 interface CardProps {
   openCard(): void;

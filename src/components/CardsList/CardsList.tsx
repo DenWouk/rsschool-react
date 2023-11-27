@@ -1,23 +1,21 @@
-import { Card } from '../Card/Card';
-import { useAppSelector } from '../../redux/hooks';
-import { useGetDataQuery } from '../../redux/dataApi';
-import './CardsList.css';
+import { Card } from "../Card/Card";
+import { ArticleInterface } from "@/types/types";
+import "./CardsList.css";
 
-export function CardsList(): JSX.Element {
-  const state = useAppSelector((store) => store.app);
-  const { data, isLoading } = useGetDataQuery({ ...state });
+interface CardsListProps {
+  cards: ArticleInterface[] | undefined;
+}
 
-  if (isLoading) {
-    return <h2 className="cards-loader">Loading...</h2>;
-  }
-
+export function CardsList({ cards }: CardsListProps): JSX.Element {
   return (
     <div className="cards" data-testid="cards">
-      {data?.articles.length ? (
-        data?.articles.map((el, i) => (
+      {cards?.length ? (
+        cards.map((el, i) => (
           <Card
-            {...el}
             key={el.title + i}
+            urlToImage={el.urlToImage}
+            title={el.title}
+            description={el.description}
             openCard={() => console.log(el.author)}
           />
         ))

@@ -2,9 +2,52 @@ import { CardsList } from "@/components/CardsList/CardsList";
 import { PageSizeBtns } from "@/components/PageSizeBtns/PageSizeBtns";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
+import {
+  getData,
+  getRunningQueriesThunk,
+  useGetDataQuery,
+} from "@/store/dataApi";
+import { wrapper } from "@/store/store";
 import Head from "next/head";
+import { useRouter } from "next/router";
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    const searchValue = context.query.searchValue || "news";
+    const pageSize = context.query.pageSize || "10";
+    const page = context.query.page || "1";
+
+    if (typeof searchValue === "string") {
+      store.dispatch(
+        getData.initiate({
+          searchValue,
+          pageSize,
+          page,
+        })
+      );
+    }
+
+    await Promise.all(store.dispatch(getRunningQueriesThunk()));
+
+    return {
+      props: {},
+    };
+  }
+);
 
 export default function Home() {
+  const router = useRouter();
+
+  const searchValue = router.query.searchValue || "news";
+  const pageSize = router.query.pageSize || "10";
+  const page = router.query.page || "1";
+
+  const { data } = useGetDataQuery({
+    searchValue: searchValue,
+    pageSize: pageSize,
+    page: page,
+  });
+
   return (
     <>
       <Head>
@@ -14,16 +57,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <>
-      <h1>Hello!</h1>
+        <div className="search-controls">
+          <SearchBar />
+          <PageSizeBtns />
+          <Pagination />
+        </div>
 
-      <div className="search-controls">
-        <SearchBar />
-        <PageSizeBtns />
-        <Pagination />
-      </div>
-
-      <CardsList />
-    </>
+        <CardsList cards={data?.articles} />
+      </>
     </>
   );
 }

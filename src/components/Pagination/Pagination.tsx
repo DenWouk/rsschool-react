@@ -1,14 +1,9 @@
-// import { useSearchParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { handlePagination } from '../../redux/appSlice';
 import './Pagination.css';
 
 export function Pagination(): JSX.Element {
-  const state = useAppSelector((store) => store.app);
-  const dispatch = useAppDispatch();
 
   const limitResults = 100;
-  const pages = [...Array(limitResults / state.pageSize).keys()];
+  const pages = [...Array(limitResults / 10).keys()];
 
   return (
     <div className="pagination-container" data-testid="pagination">
@@ -18,7 +13,7 @@ export function Pagination(): JSX.Element {
           data-testid={`pagination-btn${el + 1}`}
           key={el + 1}
           onClick={(): void => {
-            dispatch(handlePagination(el + 1));
+            // dispatch(handlePagination(el + 1));
           }}
         >
           {el + 1}

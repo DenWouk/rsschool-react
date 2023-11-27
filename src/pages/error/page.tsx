@@ -1,5 +1,5 @@
 import Link from "next/link";
-import "./Page404.css";
+import "./error-page.css";
 
 export function Page404(): JSX.Element {
   return (
