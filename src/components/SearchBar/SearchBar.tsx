@@ -1,15 +1,26 @@
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
-import "./SearchBar.css";
 import { useRouter } from "next/router";
+import "./SearchBar.css";
 
 export function SearchBar() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [searchValue, setSearchValue] = useState("");
+
+  const [searchValue, setSearchValue] = useState(router.query.search || "");
 
   function handleSearch() {
+    const searchValue = inputRef.current?.value
+      ? inputRef.current.value
+      : "news";
+
     if (inputRef.current) {
-      router.push({ query: { search: inputRef.current.value } });
+      router.push({
+        query: {
+          search: searchValue,
+          limit: router.query.limit || "10",
+          page: "1",
+        },
+      });
     }
   }
 

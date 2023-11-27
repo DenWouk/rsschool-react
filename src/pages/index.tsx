@@ -1,15 +1,16 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { CardsList } from "@/components/CardsList/CardsList";
 import { PageSizeBtns } from "@/components/PageSizeBtns/PageSizeBtns";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
+import { wrapper } from "@/store/store";
 import {
   getData,
   getRunningQueriesThunk,
   useGetDataQuery,
 } from "@/store/dataApi";
-import { wrapper } from "@/store/store";
-import Head from "next/head";
-import { useRouter } from "next/router";
+import "./index.css";
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
@@ -41,9 +42,6 @@ export default function Home() {
   const searchValue = router.query.search || "news";
   const pageSize = router.query.limit || "10";
   const page = router.query.page || "1";
-
-  // router.push({ query: { search: searchValue, limit: pageSize, page: page } });
-
 
   const { data } = useGetDataQuery({
     searchValue: searchValue,

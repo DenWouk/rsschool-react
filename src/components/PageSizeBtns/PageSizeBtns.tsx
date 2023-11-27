@@ -1,8 +1,20 @@
-import './PageSizeBtns.css';
+import { useRouter } from "next/router";
+import "./PageSizeBtns.css";
 
 export function PageSizeBtns() {
+  const router = useRouter();
 
-  const cardsPerPage = [10, 20, 50];
+  const cardsPerPage = ["10", "20", "50"];
+
+  function handleCardsPerPage(value: string) {
+    router.push({
+      query: {
+        search: router.query.search || "news",
+        limit: value,
+        page: "1",
+      },
+    });
+  }
 
   return (
     <div className="cards-qty-btns" data-testid="page-size-btns">
@@ -11,7 +23,7 @@ export function PageSizeBtns() {
         <button
           className="cards-qty-btn"
           key={el}
-          // onClick={() => dispatch(handleCardsPerPage(el))}
+          onClick={() => handleCardsPerPage(el)}
         >
           {el}
         </button>
