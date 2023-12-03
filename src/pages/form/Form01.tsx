@@ -1,23 +1,20 @@
-import { Link } from 'react-router-dom';
-import './FormPages.css';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form } from '../../components/Form/Form ';
-
-export interface FormFieldsInterface {
-  name: string;
-  age: string;
-  female: boolean;
-  male: boolean;
-  country: string;
-  image: boolean;
-  email: string;
-  password1: string;
-  password2: string;
-  rules: boolean;
-}
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { FormFieldsInterface } from '../../types/types';
+import { addData } from '../../store/dataListSlice';
+import './FormPages.css';
 
 export function Form01() {
-  function onSubmit(formFields: FormFieldsInterface) {
-    console.log(formFields);
+  const dataList = useAppSelector((store) => store.dataList);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  function onSubmit(data: FormFieldsInterface) {
+    const updatedDataList = Array(data).concat(dataList.list);
+
+    dispatch(addData(updatedDataList));
+    navigate('/');
   }
 
   return (

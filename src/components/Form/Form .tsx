@@ -1,5 +1,5 @@
 import { FormEventHandler } from 'react';
-import { FormFieldsInterface } from '../../pages/form/Form01';
+import { FormFieldsInterface } from '../../types/types';
 import './Form.css';
 
 type FormFields = {
@@ -46,7 +46,7 @@ export function Form({ onSubmit }: FormPropsInterface) {
       female: female.checked,
       male: male.checked,
       country: country.value,
-      image: image.checked,
+      image: image.value,
       email: email.value,
       password1: password1.value,
       password2: password2.value,
@@ -63,7 +63,7 @@ export function Form({ onSubmit }: FormPropsInterface) {
 
       <label className="form-label">
         Age
-        <input name="age" type="text" required />
+        <input name="age" type="text" />
       </label>
 
       <label className="form-label">
@@ -73,7 +73,7 @@ export function Form({ onSubmit }: FormPropsInterface) {
 
       <label className="form-label">
         Country
-        <input name="country" type="text" autoComplete="" required />
+        <input name="country" type="text" autoComplete="" />
       </label>
 
       <label className="form-label">
@@ -98,7 +98,7 @@ export function Form({ onSubmit }: FormPropsInterface) {
 
       <label className="form-label">
         Rules
-        <input name="rules" type="checkbox" required />
+        <input name="rules" type="checkbox" />
       </label>
 
       <input type="reset" value={'Reset'} />
