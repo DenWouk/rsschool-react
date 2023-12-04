@@ -1,9 +1,52 @@
 .form {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  width: 300px;
+  margin-top: 25px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #666666;
+}
+
+.form-label {
+  display: flex;
+  justify-content: space-between;
   gap: 10px;
 }
 
 .form-input {
-  margin-left: 10px;
+  width: 200px;
+  border: solid 1px #666666;
+  border-radius: 4px;
+}
+
+.form-radio-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.radio-btn {
+  width: 20px;
+  margin-left: -40px;
+}
+
+.form-image-preview {
+  width: 75px;
+}
+
+.form-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.form-submit-btn {
+  height: 35px;
+  margin-top: 10px;
+  border: solid 2px #666666;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #666666;
 }

@@ -1,12 +1,12 @@
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState } from 'react';
 import { FormFieldsInterface } from '../../types/types';
+import { CountriesList } from '../CountriesList/CountriesList';
 import './Form.css';
 
 type FormFields = {
   name: HTMLInputElement;
   age: HTMLInputElement;
-  female: HTMLInputElement;
-  male: HTMLInputElement;
+  gender: HTMLInputElement;
   country: HTMLInputElement;
   image: HTMLInputElement;
   email: HTMLInputElement;
@@ -20,6 +20,9 @@ interface FormPropsInterface {
 }
 
 export function Form({ onSubmit }: FormPropsInterface) {
+  const [image, setImage] = useState<string>('');
+  const [, setImageFile] = useState<File>();
+
   const handleSubmit: FormEventHandler<HTMLFormElement & FormFields> = (
     event
   ) => {
@@ -30,8 +33,7 @@ export function Form({ onSubmit }: FormPropsInterface) {
     const {
       name,
       age,
-      female,
-      male,
+      gender,
       country,
       image,
       email,
@@ -41,10 +43,9 @@ export function Form({ onSubmit }: FormPropsInterface) {
     } = form;
 
     onSubmit({
-      name: name.value,
-      age: age.value,
-      female: female.checked,
-      male: male.checked,
+      name: name.value.charAt(0).toUpperCase() + name.value.slice(1),
+      age: Math.abs(Number(age.value)),
+      gender: gender.value,
       country: country.value,
       image: image.value,
       email: email.value,
@@ -54,56 +55,116 @@ export function Form({ onSubmit }: FormPropsInterface) {
     });
   };
 
+  function handleFile(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.files && event.target.files[0] instanceof File) {
+      const file = event.target.files[0];
+      setImage(URL.createObjectURL(file));
+      setImageFile(file);
+    }
+  }
+
   return (
     <form className="form" onSubmit={handleSubmit}>
       <label className="form-label">
         Name
-        <input className="form-input" name="name" type="text" required />
+        <input
+          className="form-input"
+          name="name"
+          type="text"
+          autoFocus
+          required
+        />
       </label>
 
       <label className="form-label">
         Age
-        <input name="age" type="text" />
+        <input className="form-input" name="age" type="number" required />
       </label>
 
       <label className="form-label">
-        Gender Female <input name="female" type="radio" />
-        Male <input name="male" type="radio" />
+        <span className="form-label-title">Gender</span>
+        <div className="form-radio-btns">
+          Female{' '}
+          <input
+            className="radio-btn"
+            name="gender"
+            type="radio"
+            value="female"
+            required
+          />
+          Male{' '}
+          <input
+            className="radio-btn"
+            name="gender"
+            type="radio"
+            value="male"
+            required
+          />
+        </div>
       </label>
 
       <label className="form-label">
         Country
-        <input name="country" type="text" autoComplete="" />
+        <input
+          className="form-input"
+          name="country"
+          type="text"
+          list="countries"
+          autoComplete="off"
+          required
+        />
+        <CountriesList />
       </label>
 
       <label className="form-label">
         Image
-        <input name="image" />
+        <input
+          name="image"
+          type="file"
+          accept=".jpg,.jpeg,.png"
+          onChange={(event) => handleFile(event)}
+        />
+        {image && (
+          <img className="form-image-preview" src={image} alt="image" />
+        )}
       </label>
 
       <label className="form-label">
-        e-mail
-        <input name="email" />
+        Email
+        <input className="form-input" name="email" type="email" required />
       </label>
 
       <label className="form-label">
         Password
-        <input name="password1" />
+        <input className="form-input" name="password1" required />
       </label>
 
       <label className="form-label">
-        Repeat pass.
-        <input name="password2" />
+        Password
+        <input
+          className="form-input"
+          name="password2"
+          placeholder="Confirm password"
+          required
+        />
       </label>
 
       <label className="form-label">
-        Rules
-        <input name="rules" type="checkbox" />
+        I Agree to Privacy Policy
+        <input
+          className="form-checkbox"
+          name="rules"
+          type="checkbox"
+          required
+        />
       </label>
 
-      <input type="reset" value={'Reset'} />
-
-      <input type="submit" value={'Submit'} onClick={() => handleSubmit} />
+      <input
+        className="form-submit-btn"
+        type="submit"
+        value={'Submit'}
+        onClick={() => handleSubmit}
+      />
     </form>
   );
 }

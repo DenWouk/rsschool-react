@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import { formReducer } from './formSlice';
 import { dataListReducer } from './dataListSlice';
+import { countriesReducer } from './countrySlice';
 
 export const store = configureStore({
   reducer: {
-    // form: formReducer,
+    countries: countriesReducer,
     dataList: dataListReducer,
   },
 });

@@ -19,10 +19,12 @@ export function Form01() {
 
   return (
     <div className="form-container">
-      <h2>Form 01</h2>
+      <h3 className="page-title">Uncontrolled form</h3>
+
       <Link to={'/'}>
         <button className="btn form-page-btn">To main page</button>
       </Link>
+
       <Form onSubmit={onSubmit} />
     </div>
   );

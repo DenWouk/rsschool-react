@@ -1,15 +1,14 @@
+import { FormFieldsInterface } from '../../types/types';
 import './FormDataCard.css';
 
-interface FormDataProps {
-  name: string;
-  age: string;
-}
-
-export function FormDataCard(props: FormDataProps) {
+export function FormDataCard(props: FormFieldsInterface) {
   return (
     <div className="form-data-card">
-      <span>{props.name}</span>
-      <span>{props.age}</span>
+      <span className="data-card-item">Name: {props.name}/</span>
+      <span className="data-card-item">Age: {props.age}/</span>
+      <span className="data-card-item">Gen.: {props.gender}/</span>
+      <span className="data-card-item">Ctry: {props.country}/</span>
+      <span className="data-card-item">Email: {props.email}</span>
     </div>
   );
 }

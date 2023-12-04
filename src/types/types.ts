@@ -1,8 +1,7 @@
 export interface FormFieldsInterface {
   name: string;
-  age: string;
-  female: boolean;
-  male: boolean;
+  age: number;
+  gender: string;
   country: string;
   image: string;
   email: string;

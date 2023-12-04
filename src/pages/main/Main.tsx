@@ -8,18 +8,26 @@ export function Main() {
 
   return (
     <div className="main-page-container">
-      <h2>Main Page</h2>
-      <Link to={'form01'}>
-        <button className="btn main-page-btn">Uncontrolled Form</button>
-      </Link>
-      <Link to={'form02'}>
-        <button className="btn main-page-btn">React Hook Form</button>
-      </Link>
+      <h3 className="page-title">Main Page</h3>
+
+      <div className="main-page-links">
+        <Link to={'form01'}>
+          <button className="btn main-page-btn">Uncontrolled Form</button>
+        </Link>
+        <Link to={'form02'}>
+          <button className="btn main-page-btn">React Hook Form</button>
+        </Link>
+      </div>
 
       <div className="data-container">
-        {dataList.list.map((el, i) => (
-          <FormDataCard key={i} name={el.name} age={el.age} />
-        ))}
+        {dataList.list.length ? (
+          dataList.list.map((el, i) => <FormDataCard key={i} {...el} />)
+        ) : (
+          <h4 className="nodata-note">
+            No data yet. Enter your data on the forms pages and they will be
+            displayed here.
+          </h4>
+        )}
       </div>
     </div>
   );

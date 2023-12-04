@@ -1,0 +1,38 @@
+.btn {
+  width: 170px;
+  height: 32px;
+  padding: 2px;
+  border: solid 2px #f2f1f1;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #666666;
+  text-align: center;
+}
+
+.main-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main-page-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.page-title {
+  margin: 0 0 10px 0;
+  color: #666666;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nodata-note {
+  color: #666666;
+}
